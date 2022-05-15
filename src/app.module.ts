@@ -14,16 +14,18 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Client } from './client/model';
 import { Worker } from './worker/model';
 import { Store } from './store/model';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     SequelizeModule.forRoot({
       dialect: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'cesarnogueira',
-      password: '07101997',
-      database: 'users',
+      host: process.env.DATABASE_HOST,
+      port: Number(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       autoLoadModels: true,
       synchronize: true,
     }),
