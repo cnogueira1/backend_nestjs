@@ -7,6 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Worker } from '../model';
 import { WorkerServices } from '../services';
 
 @Controller('worker')
@@ -14,27 +15,34 @@ export class WorkerControllers {
   constructor(private workerService: WorkerServices) {}
 
   @Get()
-  getAllWorkers() {
+  async getAllWorkers(): Promise<Worker[]> {
     return this.workerService.getAll();
   }
 
   @Get(':id')
-  getWorker(@Param() param) {
-    return this.workerService.getOne(param.id);
+  async getWorker(@Param('id') param: string): Promise<Worker> {
+    return this.workerService.getOne(param);
   }
 
   @Post()
-  postWorker(@Body() body) {
+  async postWorker(@Body() body): Promise<Worker> {
     return this.workerService.post(body);
   }
 
   @Put()
-  putWorker(@Body() body) {
+  async putWorker(@Body() body): Promise<[number, Worker[]]> {
     return this.workerService.put(body);
   }
 
   @Delete(':id')
-  deleteWorker(@Param() param) {
-    return this.workerService.delete(param.id);
+  async deleteWorker(@Param('id') param: string): Promise<void> {
+    return this.workerService.delete(param);
+  }
+
+  @Get('name/:nameWorker')
+  async getAllWorksByName(
+    @Param('nameWorker') param: string,
+  ): Promise<Worker[]> {
+    return this.workerService.findAllByName(param);
   }
 }

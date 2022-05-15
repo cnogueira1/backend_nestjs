@@ -25,7 +25,7 @@ export class ClientCrontollers {
   }
 
   @Post()
-  async postClient(@Body() body): Promise<void> {
+  async postClient(@Body() body): Promise<Client> {
     return this.clientService.post(body);
   }
 

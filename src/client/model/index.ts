@@ -6,11 +6,47 @@ export class Client extends Model<Client> {
     type: DataType.STRING,
     allowNull: false,
   })
-  name: string;
+  email: string;
+
+  @Column({
+    type: DataType.STRING(60),
+    allowNull: false,
+  })
+  nameUser: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  email: string;
+  nameComplet: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  contact: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  contactType: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  address: string;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+  })
+  dateBirth: Date;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  password: string;
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Op } from 'sequelize';
 import { Worker } from '../model';
 
 @Injectable()
@@ -17,8 +18,8 @@ export class WorkerServices {
     return this.workerModel.findByPk(id);
   }
 
-  async post(worker: Worker): Promise<void> {
-    this.workerModel.create(worker);
+  async post(worker: Worker): Promise<Worker> {
+    return this.workerModel.create(worker);
   }
 
   async put(worker: Worker) {
@@ -32,5 +33,31 @@ export class WorkerServices {
   async delete(id: string): Promise<void> {
     const worker = await this.getOne(id);
     worker.destroy();
+  }
+
+  // Find all with match name search
+  async findAllByName(name: string): Promise<Worker[]> {
+    const worker = await this.workerModel.findAll({
+      where: {
+        name: {
+          [Op.like]: '%' + name + '%',
+        },
+      },
+    });
+
+    return worker;
+  }
+
+  // Find all with match service search
+  async findAllByService(service: string): Promise<Worker[]> {
+    const worker = await this.workerModel.findAll({
+      where: {
+        tasks: {
+          [Op.like]: '%' + service + '%',
+        },
+      },
+    });
+
+    return worker;
   }
 }

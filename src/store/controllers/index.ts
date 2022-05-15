@@ -7,34 +7,35 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { StoreService } from '../services';
+import { Store } from '../model';
+import { StoreServices } from '../services';
 
 @Controller('store')
 export class StoreControllers {
-  constructor(private storeService: StoreService) {}
+  constructor(private storeService: StoreServices) {}
 
   @Get()
-  getAllStores() {
+  async getAllStores(): Promise<Store[]> {
     return this.storeService.getAll();
   }
 
   @Get(':id')
-  getStore(@Param() param) {
+  async getStore(@Param() param): Promise<Store> {
     return this.storeService.getOne(param.id);
   }
 
   @Post()
-  postStore(@Body() body) {
+  async postStore(@Body() body: Store): Promise<Store> {
     return this.storeService.post(body);
   }
 
   @Put()
-  putStore(@Body() body) {
+  async putStore(@Body() body: Store): Promise<[number, Store[]]> {
     return this.storeService.put(body);
   }
 
   @Delete(':id')
-  deleteStore(@Param() param) {
+  async deleteStore(@Param() param): Promise<void> {
     return this.storeService.delete(param.id);
   }
 }

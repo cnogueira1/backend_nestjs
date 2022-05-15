@@ -18,8 +18,8 @@ export class ClientServices {
     return this.clientModel.findByPk(id);
   }
 
-  async post(client: Client): Promise<void> {
-    await this.clientModel.create(client);
+  async post(client: Client): Promise<Client> {
+    return this.clientModel.create(client);
   }
 
   async put(client: Client): Promise<[number, Client[]]> {

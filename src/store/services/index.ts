@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Store } from '../model';
 
 @Injectable()
-export class StoreService {
+export class StoreServices {
   constructor(
     @InjectModel(Store)
     private storeModel: typeof Store,
@@ -17,8 +17,8 @@ export class StoreService {
     return this.storeModel.findByPk(id);
   }
 
-  async post(store: Store): Promise<void> {
-    this.storeModel.create(store);
+  async post(store: Store): Promise<Store> {
+    return this.storeModel.create(store);
   }
 
   async put(store: Store): Promise<[number, Store[]]> {
